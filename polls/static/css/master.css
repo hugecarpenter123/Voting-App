@@ -1,0 +1,26 @@
+* {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  color: inherit;
+}
+
+nav {
+  background-color:  #008a28 ;
+  height: 55px;
+  display: flex;
+  align-items: center;
+}
+
+nav a {
+  text-decoration: none;
+  margin-left: 10%;
+  color: white;
+  font-size: 2rem;
+  font-family: sans-serif;
+  text-shadow: 2px 2px 3px  #005d1b ;
+}
+
+nav a:hover {
+  filter:  contrast(0.9);
+}
