@@ -1,6 +1,15 @@
 const qwrapper = document.querySelectorAll('.q-wrapper li');
 const voteBtn = document.querySelector('.vote-btn')
-let pickedID;
+let chartEl = document.getElementById('myChart')
+
+let pickedID
+let questionID = document.querySelector('[data-question-id]').dataset.questionId
+
+let responseJson
+const dataObject = {
+    'items': [],
+    'values': []
+}
 
 // -----------------------------------------
 // generate csrf token
@@ -51,10 +60,63 @@ voteBtn.addEventListener('click', () => {
         headers: {
          'Content-Type': 'application/json',
          'X-CSRFToken': csrftoken
-        },
-        body: JSON.stringify({'id': pickedID})
+        }
     }).then((response) => {
-        console.log("Call after calling the API")
+        console.log("API done (incremented vote), now build chart")
+        // call function that builds the Charts
+        initChart()
     })
 })
+// ------------------------------------
+
+// ------------------------------------
+// create chart and fetch data
+
+function getData() {
+
+    const url = `http://127.0.0.1:8000/vote-detail/${questionID}`
+
+    fetch(url)
+    .then((response) => {
+        responseJson = response.json()
+    })
+    .then(() => {
+        responseJson.then((data) => {
+            // Get the data from the API and fill arrays, call function to build charts afterwards
+            data.forEach((x) => {
+                let tmpItem = Object.keys(x)[0]
+                let tmpKey = Object.values(x)[0]
+                dataObject.items.push(tmpItem)
+                dataObject.values.push(tmpKey)
+            })
+            buildChart()
+        })
+    })
+}
+
+function initChart() {
+    getData()
+}
+
+function buildChart() {
+
+        const chartData = {
+        "type": "bar",
+        "scale-x": {
+            "values": dataObject.items
+        },
+        "series": [
+            {
+                "values": dataObject.values
+            }
+        ]
+    }
+
+    zingchart.render({
+      id: "myChart",
+      data: chartData,
+    });
+
+    chartEl.style['opacity'] = 1;
+}
 // ------------------------------------

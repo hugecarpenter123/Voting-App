@@ -3,19 +3,25 @@
 {% block script %}
     {% load static %}
     <script type="text/javascript" src="{% static 'js/polls.js' %}" defer></script>
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
 {% endblock script %}
 
 {% block content %}
     <div class="main-wrapper">
-        <div class="q-wrapper gradient-v" id="q1">
-            <div class="question-header">{{question_object}}</div>
+        <div class="q-wrapper gradient-v">
+            <div data-question-id="{{question_object.id}}" class="question-header">{{question_object}}</div>
             <ul>
                 {% for choice in question_object.choice_set.all %}
                     <li data-id="{{choice.id}}">{{choice}}</li>
                 {% endfor %}
             </ul>
             <button class="vote-btn">Vote</button>
-            <button class="toMenu-btn"><a href="{% url 'index' %}">Back to Polls</a></button>
+        </div>
+        <div class="button-bar">
+          <button type="button" name="button"><a href="{% url 'polls' prev %}">Previous</a></button>
+          <button type="button" name="button"><a href="{% url 'index' %}">Back to Polls</a></button>
+          <button type="button" name="button"><a href="{% url 'polls' next %}">Next</a></button>
         </div>
     </div>
+    <div id="myChart" style="opacity:0;"></div>
 {% endblock content %}
