@@ -1,0 +1,21 @@
+{% extends 'polls/base.html' %}
+
+{% block script %}
+    {% load static %}
+    <script type="text/javascript" src="{% static 'js/polls.js' %}" defer></script>
+{% endblock script %}
+
+{% block content %}
+    <div class="main-wrapper">
+        <div class="q-wrapper gradient-v" id="q1">
+            <div class="question-header">{{question_object}}</div>
+            <ul>
+                {% for choice in question_object.choice_set.all %}
+                    <li data-id="{{choice.id}}">{{choice}}</li>
+                {% endfor %}
+            </ul>
+            <button class="vote-btn">Vote</button>
+            <button class="toMenu-btn"><a href="{% url 'index' %}">Back to Polls</a></button>
+        </div>
+    </div>
+{% endblock content %}
