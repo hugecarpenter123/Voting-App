@@ -54,7 +54,6 @@ qwrapper.forEach((element) => {
       resetChoices()
       element.classList.add('picked')
       pickedID = element.dataset.id
-      localStorage.setItem(questionID, pickedID)
     })
 })
 // ------------------------------------
@@ -62,7 +61,9 @@ qwrapper.forEach((element) => {
 // ------------------------------------
 // fetch api --------------------------
 voteBtn.addEventListener('click', () => {
-    // if chart already displayed clear chart data
+    // save choice in localStorage
+    localStorage.setItem(questionID, pickedID)
+    // if chart already displayed: clear chart data
     dataObject.items = []
     dataObject.values = []
 
