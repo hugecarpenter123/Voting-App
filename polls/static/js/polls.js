@@ -12,6 +12,17 @@ const dataObject = {
 }
 
 // -----------------------------------------
+// if choice already in localStorage, hint that poll was already voted
+// and show chart
+let localStorageChoice = localStorage.getItem(questionID)
+if(localStorageChoice) {
+    document.querySelector(`[data-id="${localStorageChoice}"]`).classList.add('picked')
+    pickedID = localStorageChoice
+    initChart()
+}
+// -----------------------------------------
+
+// -----------------------------------------
 // generate csrf token
 function getCookie(name) {
     let cookieValue = null;
@@ -19,7 +30,6 @@ function getCookie(name) {
         const cookies = document.cookie.split(';');
         for (let i = 0; i < cookies.length; i++) {
             const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
             if (cookie.substring(0, name.length + 1) === (name + '=')) {
                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                 break;
@@ -44,6 +54,7 @@ qwrapper.forEach((element) => {
       resetChoices()
       element.classList.add('picked')
       pickedID = element.dataset.id
+      localStorage.setItem(questionID, pickedID)
     })
 })
 // ------------------------------------
@@ -51,6 +62,10 @@ qwrapper.forEach((element) => {
 // ------------------------------------
 // fetch api --------------------------
 voteBtn.addEventListener('click', () => {
+    // if chart already displayed clear chart data
+    dataObject.items = []
+    dataObject.values = []
+
     const url = `http://127.0.0.1:8000/vote-update/${pickedID}`
     console.log('picked id is:', pickedID)
     console.log('API url is:', url)
@@ -95,6 +110,7 @@ function getData() {
 }
 
 function initChart() {
+    console.log("init Chart called")
     getData()
 }
 

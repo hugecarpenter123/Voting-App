@@ -18,9 +18,9 @@
             <button class="vote-btn">Vote</button>
         </div>
         <div class="button-bar">
-          <button type="button" name="button"><a href="{% url 'polls' prev %}">Previous</a></button>
-          <button type="button" name="button"><a href="{% url 'index' %}">Back to Polls</a></button>
-          <button type="button" name="button"><a href="{% url 'polls' next %}">Next</a></button>
+          <a href="{% url 'polls' prev %}"><button type="button" name="button">Previous</button></a>
+          <a href="{% url 'index' %}"><button type="button" name="button">Back to Polls</button></a>
+          <a href="{% url 'polls' next %}"><button type="button" name="button">Next</button></a>
         </div>
     </div>
     <div id="myChart" style="opacity:0;"></div>
