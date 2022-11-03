@@ -1,0 +1,11 @@
+{% extends 'polls/base.html' %}
+{% block content %}
+    <div class="main-wrapper">
+        <h1>Choose poll</h1>
+        <div class="q-wrapper abs-center">
+            {% for question in question_objects %}
+                <a href="{% url 'polls' question.id %}"><div class="list-item" data-counter="{{forloop.counter}}">{{question}}</div></a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
