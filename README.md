@@ -14,9 +14,7 @@ alt="IMAGE ALT TEXT HERE" width="300" height="240" border="10" /></a>
     <li>Django REST framework</li>
   </ul></li>
   <li>JavaScript</li>
-  <li>
     <ul><li>AJAX</li></ul>
-  </li>
   <li>HTML</li>
   <li>CSS</li>
 </ul>
