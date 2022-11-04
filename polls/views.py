@@ -1,13 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from .models import Question, Choice
 
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import ChoiceSerializer, QuestionSerializer
-
-# Create your views here.
 
 def index(request):
     question_objects = Question.objects.all()
@@ -31,22 +28,15 @@ def polls(request, pk):
 
 @api_view(['POST'])
 def vote_update(request, pk):
-    print("vote_update function ---------------")
     choice = Choice.objects.get(id=pk)
     choice.votes += 1
-    print('choice votes =', choice.votes)
     choice.save()
     serializer = ChoiceSerializer(instance=choice)
-    print("vote_update end --------------------")
     return Response(serializer.data)
 
 @api_view(['GET'])
 def vote_detail(request, pk):
-    print("vote_detail function ---------------")
-
     question = Question.objects.get(id=pk)
     vote_data = [{choice.choice_text: choice.votes} for choice in question.choice_set.all()]
     serializer = QuestionSerializer(instance=question, many=False)
-    print("VOTE DATA:\n", vote_data)
-    print("vote_detail end --------------------")
     return JsonResponse(vote_data, safe=False)
